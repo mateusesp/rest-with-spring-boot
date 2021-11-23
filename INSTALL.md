@@ -1,6 +1,6 @@
 # Rest with Spring Boot
 
-##Steps to build.
+## Steps to build.
 
 ##### First Step
     mvn clean package
