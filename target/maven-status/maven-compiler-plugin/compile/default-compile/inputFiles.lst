@@ -1,0 +1,9 @@
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\Startup.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\data\vo\v1\PersonVO.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\exception\ExceptionResponse.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\data\model\Person.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\exception\ResourceNotFoundException.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\converter\DozerConverter.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\controller\PersonController.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\repository\PersonRepository.java
+C:\Users\mespo\www\personal\udemy\RestWithSpringBootUdemy\RestWithSpringBootUdemyProject\src\main\java\br\com\erudio\services\PersonServices.java
