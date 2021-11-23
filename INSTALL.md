@@ -4,6 +4,7 @@
 
 ##### First Step
     mvn clean package
+---
 ##### Second Step
 
 - Create a MySQL Database named as: rest_with_spring_boot_udemy
