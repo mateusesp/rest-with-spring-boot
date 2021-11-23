@@ -3,4 +3,4 @@
 
 ##### Api desenvolvida no curso da udemy [Curso Udemy](https://www.udemy.com/course/restful-apis-do-0-a-nuvem-com-springboot-e-docker/)
 
-- Para verificar como rodar o projeto leia o arquivo [INSTALL.MD](https://github.com/mateusesp/rest-with-spring-boot/blob/master/INSTALL.md)
+- To check how to run the project read the file: [INSTALL.MD](https://github.com/mateusesp/rest-with-spring-boot/blob/master/INSTALL.md)
