@@ -30,7 +30,6 @@ public class PersonController {
     public List<PersonVO> findAll() {
         List<PersonVO> persons = service.findAll();
         persons
-                .stream()
                 .forEach(p -> p.add(
                                 linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
                         )
