@@ -12,7 +12,7 @@ import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.repository.PersonRepository;
 
 @Service
-public class PersonServices {
+public class PersonService {
 	
 	@Autowired
 	PersonRepository repository;
