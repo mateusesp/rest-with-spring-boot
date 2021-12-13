@@ -24,16 +24,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
-                .antMatchers("/auth/signin", "/api-docs/**", "swagger-ui.html").permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/auth/signin", "/api-docs/**", "/swagger-ui.html**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .antMatchers("/users").denyAll()
                 .and()
