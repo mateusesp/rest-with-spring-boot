@@ -8,6 +8,13 @@ import java.util.List;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +39,26 @@ public class PersonController {
                         )
                 );
         return persons;
+    }
+
+    @ApiOperation(value = "Find all people recorded paginated")
+    @GetMapping(value = "/page", produces = {"application/json", "application/xml", "application/x-yaml"})
+    public ResponseEntity<PagedResources<PersonVO>> findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                                     @RequestParam(value = "limit", defaultValue = "15") int limit,
+                                                                     @RequestParam(value = "direction", defaultValue = "asc") String direction,
+                                                                     PagedResourcesAssembler assembler) {
+
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+
+        Page<PersonVO> persons = service.findAllPaginated(pageable);
+        persons
+                .forEach(p -> p.add(
+                                linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
+                        )
+                );
+        return new ResponseEntity<>(assembler.toResource(persons), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Find recorded people by id")
