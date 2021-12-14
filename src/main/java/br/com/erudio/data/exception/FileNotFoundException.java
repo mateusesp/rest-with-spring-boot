@@ -1,4 +1,4 @@
-package br.com.erudio.exception;
+package br.com.erudio.data.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,6 +11,6 @@ public class FileNotFoundException extends RuntimeException {
     }
 
     public FileNotFoundException(String exception, Throwable throwable) {
-        super(exception);
+        super(exception, throwable);
     }
 }

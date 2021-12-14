@@ -1,8 +1,8 @@
-package br.com.erudio.exception.handler;
+package br.com.erudio.data.exception.handler;
 
-import br.com.erudio.exception.ExceptionResponse;
-import br.com.erudio.exception.InvalidJwtAuthenticationException;
-import br.com.erudio.exception.ResourceNotFoundException;
+import br.com.erudio.data.exception.ExceptionResponse;
+import br.com.erudio.data.exception.InvalidJwtAuthenticationException;
+import br.com.erudio.data.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -3,7 +3,7 @@ package br.com.erudio.services;
 import br.com.erudio.converter.DozerConverter;
 import br.com.erudio.data.model.Books;
 import br.com.erudio.data.vo.v1.BooksVO;
-import br.com.erudio.exception.ResourceNotFoundException;
+import br.com.erudio.data.exception.ResourceNotFoundException;
 import br.com.erudio.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
