@@ -3,6 +3,7 @@ package br.com.erudio.controller;
 import br.com.erudio.repository.UserRepository;
 import br.com.erudio.security.AccountCredentialsVO;
 import br.com.erudio.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+@Api(tags = {"Auth Controller"})
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
