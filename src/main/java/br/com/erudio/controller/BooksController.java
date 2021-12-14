@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ public class BooksController {
     @Autowired
     private BooksService service;
 
+    @Autowired
+    private PagedResourcesAssembler<BooksVO> pagedResourcesAssembler;
+
     @ApiOperation(value = "Find all books recorded")
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public List<BooksVO> findAll() {
@@ -41,10 +45,9 @@ public class BooksController {
 
     @ApiOperation(value = "Find all books recorded paginated")
     @GetMapping(value = "/page", produces = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
-                                           @RequestParam(value = "limit", defaultValue = "15") int limit,
-                                           @RequestParam(value = "direction", defaultValue = "asc") String direction,
-                                           PagedResourcesAssembler pagedResourcesAssembler) {
+    public ResponseEntity<?> findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
+                                              @RequestParam(value = "limit", defaultValue = "15") int limit,
+                                              @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
@@ -54,7 +57,10 @@ public class BooksController {
         books
                 .forEach(b -> b.add(
                         linkTo(methodOn(BooksController.class).findById(b.getKey())).withSelfRel()));
-        return new ResponseEntity<>(pagedResourcesAssembler.toResource(books), HttpStatus.OK);
+
+        PagedResources<?> pagedResources = pagedResourcesAssembler.toResource(books);
+
+        return new ResponseEntity<>(pagedResources, HttpStatus.OK);
 
     }
 
