@@ -31,6 +31,9 @@ public class PersonController {
     @Autowired
     private PersonService service;
 
+    @Autowired
+    private PagedResourcesAssembler<PersonVO> pagedResourcesAssembler;
+
     @ApiOperation(value = "Find all people recorded")
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public List<PersonVO> findAll() {
@@ -45,10 +48,9 @@ public class PersonController {
 
     @ApiOperation(value = "Find all people recorded paginated")
     @GetMapping(value = "/page", produces = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
-                                           @RequestParam(value = "limit", defaultValue = "15") int limit,
-                                           @RequestParam(value = "direction", defaultValue = "asc") String direction,
-                                           PagedResourcesAssembler pagedResourcesAssembler) {
+    public ResponseEntity<?> findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
+                                              @RequestParam(value = "limit", defaultValue = "15") int limit,
+                                              @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
@@ -58,7 +60,10 @@ public class PersonController {
         persons
                 .forEach(p -> p.add(
                         linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
-        return new ResponseEntity<>(pagedResourcesAssembler.toResource(persons), HttpStatus.OK);
+
+        PagedResources<?> pagedResources = pagedResourcesAssembler.toResource(persons);
+
+        return new ResponseEntity<>(pagedResources, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Find recorded people by id")
@@ -71,11 +76,10 @@ public class PersonController {
 
     @ApiOperation("Find recorded people by name")
     @GetMapping(value = "/findPersonByFirstName/{firstName}", produces = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity findPersonByFirstName(@PathVariable("firstName") String firstName,
-                                                @RequestParam(value = "page", defaultValue = "0") int page,
-                                                @RequestParam(value = "limit", defaultValue = "15") int limit,
-                                                @RequestParam(value = "direction", defaultValue = "asc") String direction,
-                                                PagedResourcesAssembler pagedResourcesAssembler) {
+    public ResponseEntity<?> findPersonByFirstName(@PathVariable("firstName") String firstName,
+                                                   @RequestParam(value = "page", defaultValue = "0") int page,
+                                                   @RequestParam(value = "limit", defaultValue = "15") int limit,
+                                                   @RequestParam(value = "direction", defaultValue = "asc") String direction) {
 
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
@@ -85,7 +89,10 @@ public class PersonController {
         persons
                 .forEach(p -> p.add(
                         linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
-        return new ResponseEntity<>(pagedResourcesAssembler.toResource(persons), HttpStatus.OK);
+
+        PagedResources<?> pagedResources = pagedResourcesAssembler.toResource(persons);
+
+        return new ResponseEntity<>(pagedResources, HttpStatus.OK);
 
     }
 
