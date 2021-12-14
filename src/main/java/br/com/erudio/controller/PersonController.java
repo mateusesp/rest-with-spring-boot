@@ -43,10 +43,10 @@ public class PersonController {
 
     @ApiOperation(value = "Find all people recorded paginated")
     @GetMapping(value = "/page", produces = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity<PagedResources<PersonVO>> findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
+    public ResponseEntity findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
                                                                      @RequestParam(value = "limit", defaultValue = "15") int limit,
                                                                      @RequestParam(value = "direction", defaultValue = "asc") String direction,
-                                                                     PagedResourcesAssembler assembler) {
+                                                                     PagedResourcesAssembler pagedResourcesAssembler) {
 
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
@@ -55,10 +55,8 @@ public class PersonController {
         Page<PersonVO> persons = service.findAllPaginated(pageable);
         persons
                 .forEach(p -> p.add(
-                                linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
-                        )
-                );
-        return new ResponseEntity<>(assembler.toResource(persons), HttpStatus.OK);
+                        linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+        return new ResponseEntity<>(pagedResourcesAssembler.toResource(persons), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Find recorded people by id")
