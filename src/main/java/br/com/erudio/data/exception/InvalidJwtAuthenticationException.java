@@ -1,4 +1,4 @@
-package br.com.erudio.exception;
+package br.com.erudio.data.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
