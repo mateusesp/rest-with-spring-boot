@@ -35,15 +35,16 @@ public class PersonService {
         return page.map(this::convertToPersonVO);
     }
 
-    private PersonVO convertToPersonVO(Person person) {
-        return DozerConverter.parseObject(person, PersonVO.class);
-    }
-
     public PersonVO findById(Long id) {
 
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
         return DozerConverter.parseObject(entity, PersonVO.class);
+    }
+
+    public Page<PersonVO> findPersonByFirstName(String firstName, Pageable pageable) {
+        var page = repository.findPersonByFirstName(firstName, pageable);
+        return page.map(this::convertToPersonVO);
     }
 
     public PersonVO update(PersonVO person) {
@@ -71,6 +72,10 @@ public class PersonService {
         Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
         repository.delete(entity);
+    }
+
+    private PersonVO convertToPersonVO(Person person) {
+        return DozerConverter.parseObject(person, PersonVO.class);
     }
 
 }

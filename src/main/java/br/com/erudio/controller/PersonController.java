@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.services.PersonService;
 
+import javax.websocket.server.PathParam;
+
 @Api(tags = "Person endpoint")
 @RestController
 @RequestMapping("/api/person/v1")
@@ -44,9 +46,9 @@ public class PersonController {
     @ApiOperation(value = "Find all people recorded paginated")
     @GetMapping(value = "/page", produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity findAllPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                                     @RequestParam(value = "limit", defaultValue = "15") int limit,
-                                                                     @RequestParam(value = "direction", defaultValue = "asc") String direction,
-                                                                     PagedResourcesAssembler pagedResourcesAssembler) {
+                                           @RequestParam(value = "limit", defaultValue = "15") int limit,
+                                           @RequestParam(value = "direction", defaultValue = "asc") String direction,
+                                           PagedResourcesAssembler pagedResourcesAssembler) {
 
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
@@ -65,6 +67,26 @@ public class PersonController {
         PersonVO personVO = service.findById(id);
         personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
         return personVO;
+    }
+
+    @ApiOperation("Find recorded people by name")
+    @GetMapping(value = "/findPersonByFirstName/{firstName}", produces = {"application/json", "application/xml", "application/x-yaml"})
+    public ResponseEntity findPersonByFirstName(@PathVariable("firstName") String firstName,
+                                                @RequestParam(value = "page", defaultValue = "0") int page,
+                                                @RequestParam(value = "limit", defaultValue = "15") int limit,
+                                                @RequestParam(value = "direction", defaultValue = "asc") String direction,
+                                                PagedResourcesAssembler pagedResourcesAssembler) {
+
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+
+        Page<PersonVO> persons = service.findPersonByFirstName(firstName, pageable);
+        persons
+                .forEach(p -> p.add(
+                        linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+        return new ResponseEntity<>(pagedResourcesAssembler.toResource(persons), HttpStatus.OK);
+
     }
 
     @ApiOperation(value = "Register new person")
