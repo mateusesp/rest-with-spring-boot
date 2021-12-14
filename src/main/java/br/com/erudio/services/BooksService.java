@@ -6,6 +6,8 @@ import br.com.erudio.data.vo.v1.BooksVO;
 import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +52,14 @@ public class BooksService {
         Books entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
         repository.delete(entity);
+    }
+
+    public Page<BooksVO> findAllPaginated(Pageable pageable) {
+        var page = repository.findAll(pageable);
+        return page.map(this::convertToBooksVO);
+    }
+
+    private BooksVO convertToBooksVO(Books books) {
+        return DozerConverter.parseObject(books, BooksVO.class);
     }
 }
