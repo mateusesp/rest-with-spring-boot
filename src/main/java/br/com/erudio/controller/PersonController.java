@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.services.PersonService;
 
-import javax.websocket.server.PathParam;
-
 @Api(tags = "Person endpoint")
 @RestController
 @RequestMapping("/api/person/v1")
