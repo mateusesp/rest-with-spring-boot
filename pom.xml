@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>br.com.erudio</groupId>
-    <artifactId>rest-with-springboot-udemy</artifactId>
+    <artifactId>rest-with-springboot-udemy-archetype</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
